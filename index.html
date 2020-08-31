@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="center_space">
+      <div class="box">
+        <h1 id="m_name">Latina</h1>
+        <h3 id="artist">john due</h3>
+        <img src="images/song1.jpg" alt="coverone" />
+        <audio src="music/song1.mp3" type="mpeg/mp3"></audio>
+        <div class="controls_code">
+          `
+          <i
+            class="fa fa-backward"
+            aria-hidden="true"
+            title="backword"
+            id="backword"
+          ></i>
+          <i class="fa fa-play" aria-hidden="true" title="play" id="play"></i>
+          <i
+            class="fa fa-forward"
+            aria-hidden="true"
+            title="forward"
+            id="forward"
+          ></i>
+        </div>
+      </div>
+    </div>
+    <script>
+      const img = document.querySelector("img");
+      const music = document.querySelector("audio");
+      const play = document.getElementById("play");
+      const title = document.getElementById("m_name");
+      const artist = document.getElementById("artist");
+      const next = document.getElementById("forward");
+      const prev = document.getElementById("backword");
+
+      const songs = [
+        {
+          name: "song1",
+          title: "Black",
+          artist: "guru randhawa",
+        },
+        {
+          name: "song2",
+          title: "butterfly",
+          artist: "jass manak",
+        },
+        {
+          name: "song3",
+          title: "mera isq",
+          artist: "guri",
+        }
+      ];
+
+      let isplaying = false;
+
+      const playMusic = () => {
+        isplaying = true;
+        music.play();
+        play.classList.replace("fa-play", "fa-pause");
+        img.classList.add("anim");
+      };
+
+      // for pause functionaly
+
+      const pauseMusic = () => {
+        isplaying = false;
+        music.pause();
+        play.classList.replace("fa-pause", "fa-play");
+        img.classList.remove("anim");
+      };
+
+      play.addEventListener("click", () => {
+        // if(isplaying){
+        //     pauseMusic();
+        // }else{
+        //     playMusic();
+        // }
+        isplaying ? pauseMusic() : playMusic();
+      });
+
+      // change the data
+      const loadsong = (songs) =>{
+        title.textContent = songs.title;
+        artist.textContent = songs.artist;
+
+        music.src= "music/" +songs.name + ".mp3";
+        img.src = "images/" + songs.name + '.jpg';
+      };
+
+      songsIndex = 0;
+      // loadsong(songs[2]);
+      const nextSong = () =>{
+        songsIndex = (songsIndex + 1) % songs.length;
+        loadsong(songs[songsIndex]);
+        playMusic();
+      };
+
+      const prevSong = () =>{
+        songsIndex = (songsIndex - 1 + songs.length) % songs.length;
+        loadsong(songs[songsIndex]);
+        playMusic();
+      }
+      next.addEventListener('click', nextSong);
+      prev.addEventListener('click', prevSong);
+    </script>
+  </body>
+</html>
